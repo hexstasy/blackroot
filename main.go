@@ -1,5 +1,15 @@
 package main
 
-const VERSION = "0.0.1"
+import (
+  "github.com/hexstasy/blackroot/cli"
+  "github.com/hexstasy/blackroot/config"
+  "github.com/hexstasy/blackroot/proc_err"
+)
 
-func main() {}
+func main() {
+  cfg, err := config.Load()
+  if err != nil {
+    procerr.Err(err.Error())
+  }
+  cli.ParseOpts(&cfg)
+}
