@@ -8,9 +8,8 @@ import (
   "fmt"
 )
 
-const BUF_SIZE = 64
 const FILE_DIR = "blackroot.yml"
-var pairedCommands map[interface{}]interface{}
+var pairedCommands map[string]interface{}
 
 func Parser(executableCommand string) (string, error) {
   if os.IsNotExist(FILE_DIR) { 
@@ -26,5 +25,14 @@ func Parser(executableCommand string) (string, error) {
 }
 
 func parse(executableCommand string) (string, error) {
-  file, err := os.ReadFile(  
+  file, err := os.Open(FILE_DIR)
+  if err != nil {
+    return "", fmt.Errorf("failed to open file, dir: %s: %w", FILE_DIR, err)
+  }
+
+  if err := yaml.Unmarshal(file, &pairedCommands); err != nil {
+    return "", fmt.Errorf("failed to parse file: %w", err)
+  }
+
+  for k, v := range pairedCommands {} 
 }

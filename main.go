@@ -8,16 +8,16 @@ import (
 )
 
 func main() {
-  cfg, err := config.Load()
+  cfg, err := config.MustLoad()
   if err != nil {
     errs.Must(err.Error())
   }
 
-  if err := cli.ParseOpts(cfg); err != nil {
+  if err := cli.Parse(cfg); err != nil {
     errs.Must(err.Error())
   }
 
-  if err := parseblackroot.ParseAndExecute(cfg.command); err != nil {
+  if err := parser.Parse(cfg.Command); err != nil {
     errs.Must(err.Error())
   }
 }

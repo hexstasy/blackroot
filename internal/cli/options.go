@@ -8,12 +8,12 @@ import (
   "github.com/fatih/color"
 )
 
-func ParseOpts(cfg *config.Config) error {
-  display_version := flag.Bool("v", false, "Display version and exit.")
+func Parse(cfg *config.Config) error {
+  version := flag.Bool("v", false, "Display version and exit.")
   flag.Parse();
   
   args := os.Args
-  if *display_version {
+  if *version {
     fmt.Printf("Blackroot version: %s\n", color.GreenString(cfg.Version)) 
     return nil
   }
