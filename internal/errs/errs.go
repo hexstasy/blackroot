@@ -1,4 +1,4 @@
-package procerr
+package errs
 
 import (
   "fmt"
@@ -6,7 +6,9 @@ import (
   "github.com/fatih/color"
 )
 
-func Err(msg string) {
+
+// an invalid error, after processing which the program must be terminated
+func Must(msg string) {
   err_msg := fmt.Sprintf("blackroot %s: %s\n", color.RedString("error"), msg) 
   os.Stderr.WriteString(err_msg)
   os.Exit(1)

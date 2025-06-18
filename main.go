@@ -1,17 +1,23 @@
 package main
 
 import (
-  "github.com/hexstasy/blackroot/cli"
-  "github.com/hexstasy/blackroot/config"
-  "github.com/hexstasy/blackroot/proc_err"
+  "github.com/hexstasy/blackroot/internal/cli"
+  "github.com/hexstasy/blackroot/internal/config"
+  "github.com/hexstasy/blackroot/internal/errs"
+  "github.com/hexstasy/blackroot/internal/parser"
 )
 
 func main() {
   cfg, err := config.Load()
   if err != nil {
-    procerr.Err(err.Error())
+    errs.Must(err.Error())
   }
-  cli.ParseOpts(&cfg)
 
+  if err := cli.ParseOpts(cfg); err != nil {
+    errs.Must(err.Error())
+  }
 
+  if err := parseblackroot.ParseAndExecute(cfg.command); err != nil {
+    errs.Must(err.Error())
+  }
 }
