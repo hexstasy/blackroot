@@ -4,8 +4,10 @@ import (
   "flag"
   "fmt"
   "os"
-  "github.com/hexstasy/blackroot/config"
+  "github.com/hexstasy/blackroot/internal/config"
+  "github.com/hexstasy/blackroot/internal/parser"
   "github.com/fatih/color"
+  "github.com/hexstasy/blackroot/internal/runner"
 )
 
 func Parse(cfg *config.Config) error {
@@ -19,7 +21,15 @@ func Parse(cfg *config.Config) error {
   }
   
   if len(args) > 1 {
-    cfg.Command = args[len(args)-1]
+    command, err := parser.Parser(args[len(args)-1])
+    if err != nil {
+      return err
+    }
+
+    if err := runner.Run(command); err != nil {
+      return err
+    }
+
     return nil
   }
 
